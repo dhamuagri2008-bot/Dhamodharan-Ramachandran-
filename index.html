@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dhamodharan Artfolio – Drawing Community</title>
+  <meta name="description" content="Dhamodharan Artfolio — upload drawings, get feedback, earn approvals, and build an artist portfolio.">
+  <meta name="theme-color" content="#2f43f5">
+  <meta name="color-scheme" content="light">
+  <meta property="og:title" content="Dhamodharan Artfolio">
+  <meta property="og:description" content="A professional home for drawings, reviews and artist portfolios.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --paper:#f3f5f8; --card:#fff; --ink:#131a2e; --muted:#5b6479; --line:#e0e4ec;
+  --accent:#2f43f5; --accent-ink:#fff; --accent-soft:#e9ecff;
+  --ok:#0f7a4d; --ok-soft:#dff4ea; --warn:#8f5200; --warn-soft:#fdf0d8; --bad:#b0281c; --bad-soft:#fde5e2;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif; --body:"Figtree","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--body);padding-bottom:64px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:700}
+h2{font-size:1.35rem;font-weight:700}
+h3{font-size:1.05rem;font-weight:500}
+a{color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;background:#fff;padding:8px 12px;z-index:50}
+.muted{color:var(--muted)}.small{font-size:.875rem}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap}
+.brand{font:700 1.5rem var(--display);text-decoration:none;color:var(--accent);letter-spacing:-.03em}
+#search{flex:1;min-width:160px;max-width:420px}
+#search input{width:100%;border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:9px 12px;font:inherit}
+#nav{display:none;margin-left:auto;gap:4px;align-items:center}
+#nav a,#nav button{font:500 .95rem var(--body);text-decoration:none;padding:8px 12px;border-radius:8px;border:0;background:none;color:var(--muted);cursor:pointer}
+#nav a:hover,#nav button:hover{background:var(--paper);color:var(--ink)}
+#nav a.on{color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent);border-radius:0}
+.tabbar{position:fixed;bottom:0;left:0;right:0;z-index:20;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+.tabbar a{flex:1;text-align:center;text-decoration:none;font-size:.78rem;color:var(--muted);padding:6px 2px;border-radius:8px}
+.tabbar a.on{color:var(--accent);font-weight:600}
+.tabbar svg{display:block;margin:0 auto 2px}
+@media(min-width:820px){#nav{display:flex}.tabbar{display:none}body{padding-bottom:0}}
+
+/* layout */
+#app{max-width:1180px;margin:0 auto;padding:20px 16px 48px}
+.stack>*+*{margin-top:20px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.between{justify-content:space-between}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:28px 0 14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.intro{padding:28px 0 8px;max-width:640px}
+.intro p{font-size:1.1rem;color:var(--muted);margin:10px 0 18px}
+
+/* buttons & forms */
+.btn{font:600 .95rem var(--body);border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 16px;border-radius:8px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:#c5cad8}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.danger{color:var(--bad)}
+.btn.small{padding:6px 11px;font-size:.85rem}
+.btn[disabled]{opacity:.55;cursor:default}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
+input[type=text],input[type=email],input[type=password],textarea,select{width:100%;border:1px solid #cdd3e0;border-radius:8px;padding:10px 12px;font:inherit;background:#fff;color:inherit}
+textarea{min-height:96px;resize:vertical}
+.field{margin-bottom:16px}.field .hint{font-size:.82rem;color:var(--muted);margin-top:4px}
+.form{max-width:520px}
+.error{background:var(--bad-soft);color:var(--bad);padding:10px 12px;border-radius:8px;margin-bottom:14px;font-size:.92rem}
+.dropzone{border:2px dashed #b9c0d3;border-radius:14px;padding:28px;text-align:center;background:#fff;cursor:pointer}
+.dropzone:hover,.dropzone.over{border-color:var(--accent);background:var(--accent-soft)}
+.dropzone img{max-height:340px;margin:0 auto;border-radius:10px}
+
+/* gallery */
+.grid{columns:2 160px;column-gap:14px}
+@media(min-width:700px){.grid{columns:3 220px}}
+@media(min-width:1000px){.grid{columns:4 240px}}
+.card{display:block;break-inside:avoid;margin:0 0 14px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none}
+.card:hover{border-color:#bcc3d6}
+.card img{width:100%;height:auto;background:#e8ebf2}
+.card .meta{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 11px;font-size:.84rem}
+.card .title{font-weight:600;padding:10px 11px 0;font-size:.95rem;line-height:1.3}
+.who{display:flex;align-items:center;gap:7px;min-width:0}
+.who span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats{color:var(--muted);white-space:nowrap}
+.avatar{width:26px;height:26px;border-radius:50%;object-fit:cover;flex:none;background:var(--accent-soft);color:var(--accent);display:inline-grid;place-items:center;font:700 .72rem var(--display)}
+.avatar.lg{width:96px;height:96px;font-size:2rem}.avatar.md{width:40px;height:40px;font-size:.95rem}
+
+/* featured */
+.featured{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:760px){.featured{grid-template-columns:1.4fr 1fr;grid-template-rows:auto auto}.featured .f0{grid-row:span 2}}
+.f{position:relative;display:block;border-radius:14px;overflow:hidden;background:#dfe3ec;text-decoration:none;border:1px solid var(--line)}
+.f img{width:100%;height:100%;object-fit:cover;max-height:520px;min-height:200px}
+.f .cap{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 12px;color:#fff;background:linear-gradient(transparent,rgba(10,14,30,.78))}
+.f .cap b{font:700 1.05rem var(--display);display:block}
+.f .cap span{font-size:.85rem;opacity:.9}
+
+/* badges */
+.badge{display:inline-block;font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:99px}
+.badge.approved{background:var(--ok-soft);color:var(--ok)}
+.badge.pending{background:var(--warn-soft);color:var(--warn)}
+.badge.rejected{background:var(--bad-soft);color:var(--bad)}
+.badge.feat{background:var(--accent-soft);color:var(--accent)}
+.tag{display:inline-block;font-size:.84rem;background:var(--accent-soft);color:var(--accent);padding:3px 10px;border-radius:99px;text-decoration:none;margin:0 6px 6px 0}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.chip{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 13px;font-size:.88rem;text-decoration:none;color:var(--muted)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* detail */
+.detail{display:grid;gap:20px}
+@media(min-width:900px){.detail{grid-template-columns:minmax(0,1.5fr) minmax(320px,1fr);align-items:start}.detail aside{position:sticky;top:76px}}
+.artwork{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
+.artwork img{margin:0 auto;border-radius:8px;max-height:84vh;width:auto}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.stars{display:inline-flex;gap:2px}
+.stars button{border:0;background:none;font-size:1.6rem;line-height:1;color:#c3c8d6;cursor:pointer;padding:2px}
+.stars button.on{color:#e0a100}
+.comment{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--line)}
+.comment p{margin:2px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;font-size:.92rem}
+.note.rejected{background:var(--bad-soft)}
+
+/* profile & dashboard */
+.profile{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.tiles{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:700px){.tiles{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1000px){.tiles{grid-template-columns:repeat(6,1fr)}}
+.tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}
+.tile b{display:block;font:700 1.8rem var(--display)}
+.item{display:flex;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item img.thumb{width:72px;height:72px;object-fit:cover;border-radius:8px;flex:none}
+.item .grow{flex:1;min-width:0}
+.review{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:760px){.review{grid-template-columns:220px 1fr}}
+.empty{text-align:center;padding:48px 16px;color:var(--muted)}
+.empty h3{color:var(--ink);margin-bottom:6px}
+.artists{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.artist{display:flex;gap:12px;align-items:center;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.artist:hover{border-color:#bcc3d6}
+
+#toast{position:fixed;left:50%;bottom:84px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;max-width:90vw}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:820px){#toast{bottom:28px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+</style>
+</head>
+<body>
+  <a class="skip" href="#app">Skip to content</a>
+  <header class="top">
+    <a class="brand" href="#/" aria-label="Dhamodharan Artfolio home">Artfolio</a>
+    <form id="search" role="search">
+      <input type="search" name="q" placeholder="Search drawings, tags or artists" aria-label="Search drawings, tags or artists">
+    </form>
+    <nav id="nav" aria-label="Main"></nav>
+  </header>
+  <main id="app" tabindex="-1"></main>
+  <nav class="tabbar" id="tabbar" aria-label="Main"></nav>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module">
+
+const SEED_IMAGES = [
+  'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#eef1ff"/><stop offset="1" stop-color="#d9ddff"/></linearGradient></defs><rect width="1200" height="900" fill="url(#g)"/><circle cx="600" cy="360" r="180" fill="#2f43f5" opacity=".12"/><path d="M300 680 Q600 350 900 680" fill="none" stroke="#2f43f5" stroke-width="18" opacity=".65"/><text x="600" y="790" text-anchor="middle" font-family="sans-serif" font-size="44" fill="#131a2e">Artfolio Preview</text></svg>'),
+  'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900"><rect width="1200" height="900" fill="#f7efe8"/><circle cx="420" cy="400" r="180" fill="#d47b4d" opacity=".25"/><circle cx="760" cy="430" r="210" fill="#7b5aa6" opacity=".2"/><path d="M260 690 C450 420 720 420 940 690" fill="none" stroke="#7b5aa6" stroke-width="18"/><text x="600" y="790" text-anchor="middle" font-family="sans-serif" font-size="44" fill="#3a2830">Drawing Preview</text></svg>'),
+  'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900"><rect width="1200" height="900" fill="#eaf7f0"/><path d="M250 650 L600 250 L950 650" fill="none" stroke="#0f7a4d" stroke-width="22"/><circle cx="600" cy="400" r="85" fill="#0f7a4d" opacity=".15"/><text x="600" y="790" text-anchor="middle" font-family="sans-serif" font-size="44" fill="#143a2a">Creative Work</text></svg>'),
+  'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900"><rect width="1200" height="900" fill="#fff5dc"/><path d="M180 650 Q600 120 1020 650" fill="none" stroke="#8f5200" stroke-width="20"/><circle cx="600" cy="430" r="130" fill="#8f5200" opacity=".12"/><text x="600" y="790" text-anchor="middle" font-family="sans-serif" font-size="44" fill="#4b3210">Artist Showcase</text></svg>'),
+  'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900"><rect width="1200" height="900" fill="#f5eaff"/><path d="M280 680 C360 300 840 300 920 680" fill="none" stroke="#6f42c1" stroke-width="20"/><circle cx="600" cy="400" r="120" fill="#6f42c1" opacity=".12"/><text x="600" y="790" text-anchor="middle" font-family="sans-serif" font-size="44" fill="#321c54">Featured Art</text></svg>'),
+  'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900"><rect width="1200" height="900" fill="#e8f4ff"/><path d="M250 670 L420 420 L560 560 L760 300 L960 670" fill="none" stroke="#1769aa" stroke-width="20"/><text x="600" y="790" text-anchor="middle" font-family="sans-serif" font-size="44" fill="#12344d">Gallery Preview</text></svg>')
+];
+/* Folio in-browser backend: everything is saved in this browser (IndexedDB). No server needed. */
+const FOLIO_CONFIG = {
+  // Shown on the seeded portfolio until someone registers. The first account to register takes it over.
+  ownerName: 'Your Name',
+  ownerUsername: 'artist',
+  ownerHeadline: 'Pencil and pen artist',
+};
+
+const SEED = [
+  ['Portrait in a CSK cap', 'Graphite portrait worked over a drawing grid, with heavy hatching on the beard and soft shading across the face.', 'portrait,pencil,graphite'],
+  ['Vishnu on Adishesha', 'Reclining Vishnu under a seven-hooded serpent canopy, with scale patterns drawn cell by cell.', 'vishnu,mythology,pencil,detail'],
+  ['Murugan with peacock', 'Ornate headdress, layered jewellery and a peacock resting on the shoulder.', 'murugan,peacock,pencil,jewellery'],
+  ['Ganesha in blue ballpoint', 'Ganesha drawn entirely in blue ballpoint pen, with dense ornament on the crown and collar.', 'ganesha,ballpoint,pen'],
+  ['Warrior beside the chariot wheel', 'A long-haired warrior leaning on a chariot wheel, with a sun motif on the breastplate.', 'warrior,mythology,pencil,figure'],
+  ['Ayyappa seated on a lotus pedestal', 'Seated figure with a raised hand, framed by a glowing halo and a lotus base.', 'ayyappa,pencil,symmetry'],
+  ['Shiva with cobra, trishul and damaru', 'Meditating Shiva with a crescent moon, a coiled cobra, a trident and a drum.', 'shiva,pencil,serpent,shading'],
+  ['Little Krishna with a cow', 'Child Krishna hugging a cow, with a peacock feather and flute in the corner.', 'krishna,cow,flute,pencil'],
+  ['Hanuman, bold study', 'A high-contrast face study with strong outlines and broad graphite tone.', 'hanuman,bold,graphite,study'],
+  ['Lord Venkateswara', 'Frontal portrait with a patterned namam, a tall crown and dense jewellery.', 'venkateswara,portrait,pencil,pattern'],
+  ['Little Shiva with a trident', 'A child Shiva with wind-swept hair and a trident, drawn in a loose, energetic line.', 'shiva,child,pencil,line'],
+  ['Krishna and Kaliya', 'Krishna dancing on the serpent Kaliya, drawn in blue ballpoint with scale textures throughout.', 'krishna,kaliya,ballpoint,pen,serpent'],
+  ['Goddess with parrot and sugarcane', 'Seated goddess with a parrot on her hand and sugarcane beside her, covered in layered garlands.', 'goddess,parrot,pencil,jewellery'],
+  ['Little Shiva and tiger cub', 'A cheerful child Shiva hugging a tiger cub, in a chibi style.', 'shiva,tiger,cute,pencil'],
+  ['Seated Murugan with vel', 'Four-armed seated figure with a vel, a trident and a conch, wearing a tiered crown.', 'murugan,pencil,symmetry,line'],
+];
+
+/* ================= Firebase project (public web config; security comes from Firestore rules) ================= */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAAsAeAj6nYC7QFNnborSaANltIrRZh6IQ",
+  authDomain: "murugan-42e6d.firebaseapp.com",
+  projectId: "murugan-42e6d",
+  storageBucket: "murugan-42e6d.firebasestorage.app",
+  messagingSenderId: "78750854804",
+  appId: "1:78750854804:web:3b5839c6776e4052f64e81"
+};
+const FIREBASE_VERSION = '10.14.1';
+
+/* ================= shared helpers ================= */
+const fail = (m) => { throw new Error(m); };
+const clean = (v, n) => String(v ?? '').replace(/\s+/g, ' ').trim().slice(0, n);
+const cleanML = (v, n) => String(v ?? '').replace(/\r\n/g, '\n').trim().slice(0, n);
+const normTags = (raw) => [...new Set(String(raw ?? '').toLowerCase().split(/[,#\n]+/).map((t) => t.trim().replace(/[^a-z0-9 \-]/g, '').replace(/\s+/g, '-')).filter(Boolean))].slice(0, 8).map((t) => t.slice(0, 24)).join(',');
+const byId = (arr, id) => arr.find((x) => String(x.id) === String(id));
+const isRev = (u) => !!u && (u.role === 'admin' || u.role === 'curator');
+const nowIso = () => new Date().toISOString();
+const has = (s, q) => String(s || '').toLowerCase().includes(q);
+
+/* Shrinks a photo so it fits inside one database record (about 1 MB limit). */
+function fitImage(file, { max = 1100, limit = 880000 } = {}) {
+  return new Promise((res, rej) => {
+    if (!/^image\/(jpeg|png|webp|gif)$/.test(file.type)) return rej(new Error('Only JPG, PNG, WebP or GIF images are allowed.'));
+    if (file.size > 20 * 1024 * 1024) return rej(new Error('That image is over 20 MB. Choose a smaller one.'));
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      for (const [scale, q] of [[1, 0.82], [0.85, 0.72], [0.7, 0.62], [0.55, 0.55]]) {
+        const k = Math.min(1, max / Math.max(img.width, img.height)) * scale;
+        const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(img.width * k)); c.height = Math.max(1, Math.round(img.height * k));
+        const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height); ctx.drawImage(img, 0, 0, c.width, c.height);
+        const out = c.toDataURL('image/jpeg', q);
+        if (out.length <= limit) return res(out);
+      }
+      rej(new Error('That image is too detailed to store. Try a smaller photo.'));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('That image couldn’t be read. Try a different file.')); };
+    img.src = url;
+  });
+}
+
+function demoState() {
+  const t0 = Date.now();
+  return {
+    seq: 100,
+    users: [{ id: '1', name: FOLIO_CONFIG.ownerName, username: FOLIO_CONFIG.ownerUsername, email: '', salt: '', hash: '', role: 'admin', headline: FOLIO_CONFIG.ownerHeadline, bio: '', location: '', avatar: null, created_at: nowIso(), placeholder: true }],
+    drawings: SEED.map(([title, description, tags], i) => ({
+      id: String(i + 1), user_id: '1', title, description, tags, image: 'seed:' + (i + 1),
+      status: 'approved', review_note: '', featured: i < 3 ? 1 : 0, created_at: new Date(t0 - (SEED.length - i) * 3600e3).toISOString(),
+    })),
+    likes: [], comments: [], ratings: [],
+  };
+}
+
+/* ================= backend 1: this browser only ================= */
+function makeLocal() {
+  const ls = (() => {
+    try { localStorage.setItem('_t', '1'); localStorage.removeItem('_t'); return localStorage; }
+    catch { const mem = {}; return { getItem: (k) => (k in mem ? mem[k] : null), setItem: (k, v) => { mem[k] = String(v); }, removeItem: (k) => { delete mem[k]; } }; }
+  })();
+  const KEY = 'folio-state-v2', SESSION = 'folio-session-v2';
+  let S = null, db = null;
+  const openDb = () => new Promise((res, rej) => { const r = indexedDB.open('folio', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
+  const idbGet = (k) => new Promise((res, rej) => { const q = db.transaction('kv').objectStore('kv').get(k); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); });
+  const idbSet = (k, v) => new Promise((res, rej) => { const t = db.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = res; t.onerror = () => rej(t.error); });
+  const save = async () => {
+    try { if (db) await idbSet(KEY, S); else ls.setItem(KEY, JSON.stringify(S)); }
+    catch {
+      if (db) { try { ls.setItem(KEY, JSON.stringify(S)); return; } catch {} }
+      throw new Error('Your browser couldn’t save that. It may be out of storage space.');
+    }
+  };
+  async function sha(salt, pw) {
+    const data = new TextEncoder().encode(salt + ':' + pw);
+    if (globalThis.crypto && crypto.subtle) return [...new Uint8Array(await crypto.subtle.digest('SHA-256', data))].map((b) => b.toString(16).padStart(2, '0')).join('');
+    let h = 5381; for (const c of salt + pw) h = ((h << 5) + h + c.charCodeAt(0)) | 0; return String(h);
+  }
+  const salt = () => Math.random().toString(36).slice(2) + Date.now().toString(36);
+  return {
+    mode: 'local',
+    get S() { return S; },
+    async init() {
+      try { db = await openDb(); S = await idbGet(KEY); } catch { db = null; try { S = JSON.parse(ls.getItem(KEY)); } catch {} }
+      if (!S) { S = demoState(); await save(); }
+    },
+    async refresh() {},
+    newId() { return String(++S.seq); },
+    viewer() { const id = ls.getItem(SESSION); return id ? byId(S.users, id) || null : null; },
+    async register({ name, username, email, pw }) {
+      if (S.users.some((x) => x.email && x.email === email)) fail('That email already has an account.');
+      if (S.users.some((x) => x.username === username && !x.placeholder)) fail('That username is taken.');
+      const s = salt(), h = await sha(s, pw);
+      let user = S.users.find((x) => x.placeholder);
+      if (user) Object.assign(user, { name, username, email, salt: s, hash: h, placeholder: false, role: 'admin' });
+      else { user = { id: String(++S.seq), name, username, email, salt: s, hash: h, role: 'artist', headline: '', bio: '', location: '', avatar: null, created_at: nowIso() }; S.users.push(user); }
+      await save(); ls.setItem(SESSION, user.id); return user;
+    },
+    async login(email, pw) {
+      const user = S.users.find((x) => x.email && x.email === email);
+      if (!user || (await sha(user.salt, pw)) !== user.hash) fail('Email or password is incorrect.');
+      ls.setItem(SESSION, user.id); return user;
+    },
+    async logout() { ls.removeItem(SESSION); },
+    saveUser: save, saveDrawing: save, deleteDrawing: save, saveComment: save, deleteComment: save, saveRating: save,
+    async setLike() { await save(); },
+  };
+}
+
+/* ================= backend 2: Firebase (Auth + Firestore) ================= */
+async function makeCloud() {
+  const base = `https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/`;
+  const timeout = (ms) => new Promise((_, r) => setTimeout(() => r(new Error('Firebase took too long to load.')), ms));
+  const [appM, authM, fsM] = await Promise.race([
+    Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-firestore.js')]),
+    timeout(12000),
+  ]);
+  const { doc, collection, getDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where, writeBatch } = fsM;
+  const app = appM.initializeApp(FIREBASE_CONFIG);
+  const auth = authM.initializeAuth(app, { persistence: [authM.indexedDBLocalPersistence, authM.browserLocalPersistence, authM.inMemoryPersistence] });
+  const fs = fsM.initializeFirestore(app, { experimentalAutoDetectLongPolling: true });
+  await new Promise((res) => { const un = authM.onAuthStateChanged(auth, () => { un(); res(); }); });
+
+  let S = null, last = 0;
+  const uDoc = (d) => ({ id: d.id, name: d.data().name, username: d.data().username, headline: d.data().headline || '', bio: d.data().bio || '', location: d.data().location || '', avatar: d.data().avatar || null, role: d.data().role || 'artist', created_at: d.data().createdAt || '' });
+  const dDoc = (d) => { const x = d.data(); return { id: d.id, user_id: x.userId, title: x.title, description: x.description || '', tags: x.tags || '', image: x.image, status: x.status, review_note: x.reviewNote || '', featured: x.featured ? 1 : 0, created_at: x.createdAt || '' }; };
+  const dOut = (d) => ({ userId: d.user_id, title: d.title, description: d.description, tags: d.tags, image: d.image, status: d.status, reviewNote: d.review_note || '', featured: !!d.featured, createdAt: d.created_at });
+
+  async function loadAll() {
+    const admin = await getDoc(doc(fs, 'config', 'admin'));
+    if (!admin.exists()) { S = demoState(); last = Date.now(); return; }
+    const col = (n) => collection(fs, n);
+    const [us, ap, lk, cm, rt] = await Promise.all([getDocs(col('users')), getDocs(query(col('drawings'), where('status', '==', 'approved'))), getDocs(col('likes')), getDocs(col('comments')), getDocs(col('ratings'))]);
+    const users = us.docs.map(uDoc), uid = auth.currentUser?.uid, me = uid && users.find((u) => u.id === uid);
+    const extra = [];
+    if (uid) extra.push(getDocs(query(col('drawings'), where('userId', '==', uid))));
+    if (me && (me.role === 'admin' || me.role === 'curator')) extra.push(getDocs(query(col('drawings'), where('status', '==', 'pending'))));
+    const more = await Promise.all(extra);
+    const map = new Map();
+    [ap, ...more].forEach((snap) => snap.docs.forEach((d) => map.set(d.id, dDoc(d))));
+    S = {
+      seq: 0, users, drawings: [...map.values()],
+      likes: lk.docs.map((d) => ({ id: d.id, drawing_id: d.data().drawingId, user_id: d.data().userId })),
+      comments: cm.docs.map((d) => ({ id: d.id, drawing_id: d.data().drawingId, user_id: d.data().userId, body: d.data().body, created_at: d.data().createdAt })),
+      ratings: rt.docs.map((d) => ({ id: d.id, drawing_id: d.data().drawingId, user_id: d.data().userId, stars: d.data().stars })),
+    };
+    last = Date.now();
+  }
+
+  async function seedDrawings(uid) {
+    const batch = writeBatch(fs), t0 = Date.now();
+    SEED.forEach(([title, description, tags], i) => {
+      const ref = doc(collection(fs, 'drawings'));
+      batch.set(ref, dOut({ user_id: uid, title, description, tags, image: 'seed:' + (i + 1), status: 'approved', review_note: '', featured: i < 3, created_at: new Date(t0 - (SEED.length - i) * 3600e3).toISOString() }));
+    });
+    await batch.commit();
+  }
+
+  try { await loadAll(); }
+  catch (e) { e.firebaseSetup = true; throw e; }
+
+  return {
+    mode: 'cloud',
+    get S() { return S; },
+    async init() {},
+    async refresh(force) { if (force || Date.now() - last > 8000) await loadAll(); },
+    newId(col) { return doc(collection(fs, col)).id; },
+    viewer() {
+      const a = auth.currentUser; if (!a || !S) return null;
+      const u = byId(S.users, a.uid); if (u) u.email = a.email; return u || null;
+    },
+    async register({ name, username, email, pw }) {
+      if ((await getDoc(doc(fs, 'usernames', username))).exists()) fail('That username is taken.');
+      const cred = await authM.createUserWithEmailAndPassword(auth, email, pw), uid = cred.user.uid;
+      try {
+        let role = 'artist';
+        if (!(await getDoc(doc(fs, 'config', 'admin'))).exists()) { await setDoc(doc(fs, 'config', 'admin'), { uid }); role = 'admin'; }
+        await setDoc(doc(fs, 'usernames', username), { uid });
+        await setDoc(doc(fs, 'users', uid), { name, username, headline: '', bio: '', location: '', avatar: null, role, createdAt: nowIso() });
+        if (role === 'admin') await seedDrawings(uid);
+      } catch (e) { try { await cred.user.delete(); } catch {} throw e; }
+      await loadAll(); return this.viewer();
+    },
+    async login(email, pw) { await authM.signInWithEmailAndPassword(auth, email, pw); await loadAll(); return this.viewer() || fail('Your profile is missing. Contact the site admin.'); },
+    async logout() { await authM.signOut(auth); await loadAll(); },
+    async saveUser(u) { await updateDoc(doc(fs, 'users', u.id), { name: u.name, headline: u.headline, bio: u.bio, location: u.location, avatar: u.avatar || null }); },
+    async saveDrawing(d) { await setDoc(doc(fs, 'drawings', d.id), dOut(d)); },
+    async deleteDrawing(d) { await deleteDoc(doc(fs, 'drawings', d.id)); },
+    async setLike(drawingId, userId, on) {
+      const ref = doc(fs, 'likes', drawingId + '_' + userId);
+      if (on) await setDoc(ref, { drawingId, userId }); else await deleteDoc(ref);
+    },
+    async saveComment(c) { await setDoc(doc(fs, 'comments', c.id), { drawingId: c.drawing_id, userId: c.user_id, body: c.body, createdAt: c.created_at }); },
+    async deleteComment(c) { await deleteDoc(doc(fs, 'comments', c.id)); },
+    async saveRating(r) { await setDoc(doc(fs, 'ratings', r.drawing_id + '_' + r.user_id), { drawingId: r.drawing_id, userId: r.user_id, stars: r.stars }); },
+  };
+}
+
+/* ================= the API the page talks to ================= */
+function makeApi(getB) {
+  const pub = (u) => ({ id: u.id, name: u.name, username: u.username, headline: u.headline, bio: u.bio, location: u.location, avatar: u.avatar, role: u.role, created_at: u.created_at });
+  const self = (u) => ({ ...pub(u), email: u.email || '' });
+  const viewable = (d, v) => d.status === 'approved' || (v && (String(v.id) === String(d.user_id) || isRev(v)));
+  const imgSrc = (img) => (String(img).startsWith('seed:') ? SEED_IMAGES[+String(img).slice(5) - 1] : img);
+
+  async function handle(url, method, body, form) {
+    const B = getB();
+    const u = new URL(url, 'http://x'), p = u.pathname, q = Object.fromEntries(u.searchParams);
+    if (method === 'GET' && /^\/api\/(drawings|artists|dashboard|review)/.test(p)) await B.refresh();
+    const S = B.S, v = B.viewer();
+    let m;
+    const needAuth = () => v || fail('Log in to do that.');
+
+    const shape = (d) => {
+      const a = byId(S.users, d.user_id) || { id: d.user_id, name: 'Unknown artist', username: 'unknown', avatar: null, headline: '' };
+      const rs = S.ratings.filter((r) => r.drawing_id === d.id);
+      const note = v && (String(v.id) === String(d.user_id) || isRev(v));
+      return {
+        id: d.id, title: d.title, description: d.description, tags: d.tags ? d.tags.split(',') : [], image: imgSrc(d.image), status: d.status,
+        review_note: note ? d.review_note : '', featured: !!d.featured, created_at: d.created_at,
+        artist: { id: a.id, name: a.name, username: a.username, avatar: a.avatar, headline: a.headline },
+        likes: S.likes.filter((l) => l.drawing_id === d.id).length, comments: S.comments.filter((c) => c.drawing_id === d.id).length,
+        rating: rs.length ? Math.round((rs.reduce((s, r) => s + r.stars, 0) / rs.length) * 10) / 10 : null, rating_count: rs.length,
+        liked: !!(v && S.likes.some((l) => l.drawing_id === d.id && String(l.user_id) === String(v.id))),
+        my_rating: (v && rs.find((r) => String(r.user_id) === String(v.id))?.stars) || 0,
+      };
+    };
+    const avgFor = (ds) => { const rs = S.ratings.filter((r) => ds.some((d) => d.id === r.drawing_id)); return rs.length ? Math.round((rs.reduce((s, r) => s + r.stars, 0) / rs.length) * 10) / 10 : null; };
+    const commentShape = (c) => { const x = byId(S.users, c.user_id) || { id: c.user_id, name: 'Unknown', username: 'unknown', avatar: null }; return { id: c.id, body: c.body, created_at: c.created_at, user: { id: x.id, name: x.name, username: x.username, avatar: x.avatar } }; };
+
+    if (p === '/api/me' && method === 'GET') return { user: v ? self(v) : null };
+
+    if (p === '/api/register') {
+      const name = clean(body.name, 60), username = clean(body.username, 24).toLowerCase(), email = clean(body.email, 120).toLowerCase(), pw = String(body.password ?? '');
+      if (!name) fail('Enter your name.');
+      if (!/^[a-z0-9_]{3,24}$/.test(username)) fail('Usernames use 3–24 letters, numbers or underscores.');
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) fail('Enter a valid email address.');
+      if (pw.length < 8) fail('Use a password with at least 8 characters.');
+      return { user: self(await B.register({ name, username, email, pw })) };
+    }
+    if (p === '/api/login') return { user: self(await B.login(clean(body.email, 120).toLowerCase(), String(body.password ?? ''))) };
+    if (p === '/api/logout') { await B.logout(); return { ok: true }; }
+
+    if (p === '/api/me' && method === 'PUT') {
+      needAuth();
+      const name = clean(form.get('name'), 60) || fail('Enter your name.');
+      const file = form.get('avatar');
+      const avatar = file && file.size ? await fitImage(file, { max: 320, limit: 120000 }) : v.avatar;
+      Object.assign(v, { name, headline: clean(form.get('headline'), 100), bio: cleanML(form.get('bio'), 1000), location: clean(form.get('location'), 60), avatar });
+      await B.saveUser(v); return { user: self(v) };
+    }
+
+    if (p === '/api/drawings' && method === 'GET') {
+      let list = S.drawings.slice();
+      if (q.mine === '1') { needAuth(); list = list.filter((d) => String(d.user_id) === String(v.id)); } else list = list.filter((d) => d.status === 'approved');
+      if (q.artist) list = list.filter((d) => byId(S.users, d.user_id)?.username === q.artist.toLowerCase());
+      if (q.featured === '1') list = list.filter((d) => d.featured);
+      if (q.tag) list = list.filter((d) => d.tags.split(',').includes(q.tag.toLowerCase()));
+      if (q.q) { const s = clean(q.q, 80).toLowerCase(); list = list.filter((d) => { const a = byId(S.users, d.user_id) || {}; return [d.title, d.description, d.tags, a.name, a.username].some((x) => has(x, s)); }); }
+      const items = list.map(shape);
+      const by = { top: (a, b) => b.likes - a.likes, rated: (a, b) => (b.rating || 0) - (a.rating || 0) || b.rating_count - a.rating_count }[q.sort]
+        || ((a, b) => (a.created_at < b.created_at ? 1 : a.created_at > b.created_at ? -1 : 0));
+      items.sort(by);
+      const limit = Math.min(+q.limit || 24, 60), off = Math.max(+q.offset || 0, 0);
+      return { items: items.slice(off, off + limit), has_more: items.length > off + limit };
+    }
+    if ((m = p.match(/^\/api\/drawings\/([^/]+)$/)) && method === 'GET') {
+      const d = byId(S.drawings, m[1]); if (!d || !viewable(d, v)) fail('That drawing is not available.');
+      return { drawing: shape(d), comments: S.comments.filter((c) => c.drawing_id === d.id).sort((a, b) => (a.created_at < b.created_at ? -1 : 1)).map(commentShape) };
+    }
+    if (p === '/api/drawings' && method === 'POST') {
+      needAuth(); const file = form.get('image');
+      if (!file || !file.size) fail('Choose an image to upload.');
+      const title = clean(form.get('title'), 120) || fail('Give your drawing a title.');
+      const image = await fitImage(file);
+      const d = { id: B.newId('drawings'), user_id: v.id, title, description: cleanML(form.get('description'), 2000), tags: normTags(form.get('tags')), image, status: 'pending', review_note: '', featured: 0, created_at: nowIso() };
+      S.drawings.push(d);
+      try { await B.saveDrawing(d); } catch (e) { S.drawings.pop(); throw e; }
+      return { drawing: shape(d) };
+    }
+    if ((m = p.match(/^\/api\/drawings\/([^/]+)$/)) && method === 'PUT') {
+      needAuth(); const d = byId(S.drawings, m[1]); if (!d || String(d.user_id) !== String(v.id)) fail('That drawing is not available.');
+      const title = clean(body.title, 120) || fail('Give your drawing a title.');
+      Object.assign(d, { title, description: cleanML(body.description, 2000), tags: normTags(body.tags), status: 'pending', featured: 0, review_note: '' });
+      await B.saveDrawing(d); return { drawing: shape(d) };
+    }
+    if ((m = p.match(/^\/api\/drawings\/([^/]+)$/)) && method === 'DELETE') {
+      needAuth(); const d = byId(S.drawings, m[1]); if (!d || (String(d.user_id) !== String(v.id) && v.role !== 'admin')) fail('That drawing is not available.');
+      await B.deleteDrawing(d);
+      S.drawings = S.drawings.filter((x) => x !== d); S.likes = S.likes.filter((l) => l.drawing_id !== d.id);
+      S.comments = S.comments.filter((c) => c.drawing_id !== d.id); S.ratings = S.ratings.filter((r) => r.drawing_id !== d.id);
+      return { ok: true };
+    }
+
+    if ((m = p.match(/^\/api\/drawings\/([^/]+)\/(like|comments|rate|feature)$/)) && method === 'POST') {
+      needAuth(); const d = byId(S.drawings, m[1]);
+      if (m[2] === 'feature') {
+        if (v.role !== 'admin') fail('Only admins can do that.');
+        if (!d) fail('That drawing is not available.'); if (d.status !== 'approved') fail('Only approved drawings can be featured.');
+        d.featured = body.featured ? 1 : 0; await B.saveDrawing(d); return { featured: !!d.featured };
+      }
+      if (!d || !viewable(d, v)) fail('That drawing is not available.');
+      if (m[2] === 'like') {
+        const i = S.likes.findIndex((l) => l.drawing_id === d.id && String(l.user_id) === String(v.id));
+        await B.setLike(d.id, v.id, i < 0);
+        if (i >= 0) S.likes.splice(i, 1); else S.likes.push({ id: d.id + '_' + v.id, drawing_id: d.id, user_id: v.id });
+        return { liked: i < 0, likes: S.likes.filter((l) => l.drawing_id === d.id).length };
+      }
+      if (m[2] === 'comments') {
+        const text = cleanML(body.body, 1000) || fail('Write a comment first.');
+        const c = { id: B.newId('comments'), drawing_id: d.id, user_id: v.id, body: text, created_at: nowIso() };
+        await B.saveComment(c); S.comments.push(c); return { comment: commentShape(c) };
+      }
+      if (m[2] === 'rate') {
+        if (d.status !== 'approved') fail('Ratings open once a drawing is approved.');
+        if (String(d.user_id) === String(v.id)) fail('You can’t rate your own drawing.');
+        const stars = parseInt(body.stars, 10); if (!(stars >= 1 && stars <= 5)) fail('Choose 1 to 5 stars.');
+        let r = S.ratings.find((x) => x.drawing_id === d.id && String(x.user_id) === String(v.id));
+        if (!r) { r = { id: d.id + '_' + v.id, drawing_id: d.id, user_id: v.id, stars }; S.ratings.push(r); } else r.stars = stars;
+        await B.saveRating(r); const s = shape(d); return { my_rating: stars, rating: s.rating, rating_count: s.rating_count };
+      }
+    }
+    if ((m = p.match(/^\/api\/comments\/([^/]+)$/)) && method === 'DELETE') {
+      needAuth(); const c = byId(S.comments, m[1]); if (!c) fail('That comment no longer exists.');
+      const d = byId(S.drawings, c.drawing_id);
+      if (String(c.user_id) !== String(v.id) && String(d?.user_id) !== String(v.id) && v.role !== 'admin') fail('You can only remove your own comments.');
+      await B.deleteComment(c); S.comments = S.comments.filter((x) => x !== c); return { ok: true };
+    }
+
+    if (p === '/api/review' && method === 'GET') {
+      if (!isRev(v)) fail('Only curators can do that.');
+      return { items: S.drawings.filter((d) => d.status === 'pending').sort((a, b) => (a.created_at < b.created_at ? -1 : 1)).map(shape) };
+    }
+    if ((m = p.match(/^\/api\/review\/([^/]+)$/)) && method === 'POST') {
+      if (!isRev(v)) fail('Only curators can do that.');
+      const d = byId(S.drawings, m[1]); if (!d) fail('That drawing is not available.');
+      if (String(d.user_id) === String(v.id) && v.role !== 'admin') fail('Another curator needs to review your own work.');
+      if (!['approved', 'rejected'].includes(body.decision)) fail('Choose approve or request changes.');
+      const note = cleanML(body.note, 500);
+      if (body.decision === 'rejected' && !note) fail('Tell the artist what to change.');
+      d.status = body.decision; d.review_note = note; if (d.status !== 'approved') d.featured = 0;
+      await B.saveDrawing(d); return { drawing: shape(d) };
+    }
+
+    if (p === '/api/artists' && method === 'GET') {
+      const s = clean(q.q || '', 80).toLowerCase();
+      const items = S.users.filter((x) => !s || [x.name, x.username, x.headline, x.location].some((y) => has(y, s))).map((x) => {
+        const ds = S.drawings.filter((d) => String(d.user_id) === String(x.id) && d.status === 'approved');
+        return { id: x.id, name: x.name, username: x.username, headline: x.headline, location: x.location, avatar: x.avatar, works: ds.length, likes: S.likes.filter((l) => ds.some((d) => d.id === l.drawing_id)).length };
+      }).filter((a) => a.works > 0).sort((a, b) => b.likes - a.likes || b.works - a.works);
+      return { items };
+    }
+    if ((m = p.match(/^\/api\/artists\/([^/]+)$/)) && method === 'GET') {
+      const x = S.users.find((y) => y.username === decodeURIComponent(m[1]).toLowerCase()); if (!x) fail('No artist with that username.');
+      const ds = S.drawings.filter((d) => String(d.user_id) === String(x.id) && d.status === 'approved');
+      return { artist: pub(x), stats: { works: ds.length, likes: S.likes.filter((l) => ds.some((d) => d.id === l.drawing_id)).length, rating: avgFor(ds) } };
+    }
+
+    if (p === '/api/dashboard') {
+      needAuth(); const mine = S.drawings.filter((d) => String(d.user_id) === String(v.id)), cnt = (s) => mine.filter((d) => d.status === s).length;
+      const rs = S.ratings.filter((r) => mine.some((d) => d.id === r.drawing_id));
+      const fromOthers = S.comments.filter((c) => mine.some((d) => d.id === c.drawing_id) && String(c.user_id) !== String(v.id));
+      const feedback = fromOthers.slice().sort((a, b) => (a.created_at < b.created_at ? 1 : -1)).slice(0, 8).map((c) => {
+        const x = byId(S.users, c.user_id) || { name: 'Unknown', username: 'unknown', avatar: null }, d = byId(S.drawings, c.drawing_id);
+        return { id: c.id, body: c.body, created_at: c.created_at, drawing_id: d.id, title: d.title, name: x.name, username: x.username, avatar: x.avatar };
+      });
+      return {
+        counts: { total: mine.length, approved: cnt('approved'), pending: cnt('pending'), rejected: cnt('rejected') },
+        likes: S.likes.filter((l) => mine.some((d) => d.id === l.drawing_id)).length, comments: fromOthers.length,
+        rating: avgFor(mine), rating_count: rs.length, feedback,
+        pending_review: isRev(v) ? S.drawings.filter((d) => d.status === 'pending').length : null,
+      };
+    }
+    fail('Not found.');
+  }
+
+  const friendly = (e) => {
+    const c = e && e.code;
+    const map = {
+      'auth/email-already-in-use': 'That email already has an account.',
+      'auth/invalid-credential': 'Email or password is incorrect.', 'auth/wrong-password': 'Email or password is incorrect.', 'auth/user-not-found': 'Email or password is incorrect.',
+      'auth/weak-password': 'Use a password with at least 8 characters.', 'auth/invalid-email': 'Enter a valid email address.',
+      'auth/too-many-requests': 'Too many attempts. Try again in a few minutes.', 'auth/network-request-failed': 'Can’t reach Firebase. Check your connection.',
+      'auth/operation-not-allowed': 'Email sign-in isn’t switched on in Firebase yet. Enable it under Authentication.',
+      'permission-denied': 'Firebase blocked that action. Update your Firestore rules, then try again.',
+      'unavailable': 'Can’t reach Firebase. Check your connection.',
+    };
+    return new Error(map[c] || (e && e.message) || 'Something went wrong. Try again.');
+  };
+  return async (url, { method = 'GET', body, form } = {}) => { try { return await handle(url, method, body || {}, form); } catch (e) { throw friendly(e); } };
+}
+
+/* ================= start-up: use Firebase if it works, otherwise this browser ================= */
+let BACKEND = null;
+const ready = (async () => {
+  let note = '';
+  try { BACKEND = await makeCloud(); }
+  catch (e) {
+    const c = e && e.code;
+    note = c === 'permission-denied' ? 'Firestore rules need updating, so the site is running in offline mode.'
+      : e && e.firebaseSetup ? 'Firestore isn’t reachable yet (create the database in the Firebase console), so the site is running in offline mode.'
+      : 'Preview mode: this page can’t reach Firebase from here. Open it in a normal browser or on your own web address to use the database.';
+    console.info('[Folio] Running without Firebase:', (e && e.message) || e);
+    BACKEND = makeLocal(); await BACKEND.init();
+  }
+  window.FOLIO_MODE = BACKEND.mode;
+  const el = document.createElement('p');
+  el.className = 'muted small'; el.style.cssText = 'text-align:center;padding:0 16px 90px;margin:0';
+  el.textContent = BACKEND.mode === 'cloud' ? 'Connected to the Firebase database.' : note;
+  document.body.appendChild(el);
+})();
+const rawApi = makeApi(() => BACKEND);
+window.api = async (url, opts) => { await ready; return rawApi(url, opts); };
+
+</script>
+<script type="module">
+
+(() => {
+  const app = document.getElementById('app');
+  let me = null;
+
+  /* ---------- helpers ---------- */
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const $ = (sel, el = app) => el.querySelector(sel);
+  const $$ = (sel, el = app) => [...el.querySelectorAll(sel)];
+
+  let toastTimer;
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  const ago = (iso) => {
+    const s = (Date.now() - new Date(iso).getTime()) / 1000;
+    const units = [['year', 31536000], ['month', 2592000], ['week', 604800], ['day', 86400], ['hour', 3600], ['minute', 60]];
+    for (const [u, n] of units) if (s >= n) return new Intl.RelativeTimeFormat('en', { numeric: 'auto' }).format(-Math.floor(s / n), u);
+    return 'just now';
+  };
+
+  const initials = (n) => String(n).split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+  const avatar = (u, size = '') =>
+    u.avatar ? `<img class="avatar ${size}" src="${esc(u.avatar)}" alt="">` : `<span class="avatar ${size}" aria-hidden="true">${esc(initials(u.name))}</span>`;
+
+  const STATUS = { approved: 'Approved', pending: 'In review', rejected: 'Changes requested' };
+  const badge = (s) => `<span class="badge ${s}">${STATUS[s]}</span>`;
+
+  const isReviewer = () => me && (me.role === 'admin' || me.role === 'curator');
+
+  function parseHash() {
+    const raw = current.replace(/^#/, '') || '/';
+    const [path, qs] = raw.split('?');
+    return { path, params: Object.fromEntries(new URLSearchParams(qs || '')) };
+  }
+  let current = location.hash || '#/';
+  const go = (h) => {
+    current = h;
+    try { history.pushState(null, '', h); } catch {}
+    route();
+  };
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a[href^="#/"]');
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    go(a.getAttribute('href'));
+  });
+  window.addEventListener('popstate', () => { current = location.hash || '#/'; route(); });
+
+  function errorBox(msg) { return msg ? `<div class="error" role="alert">${esc(msg)}</div>` : ''; }
+
+  /* ---------- nav ---------- */
+  const ICON = {
+    explore: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
+    artists: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>',
+    upload: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>',
+    dash: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+    review: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12l5 5 9-10"/></svg>',
+    login: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 4h6v16h-6M10 8l-4 4 4 4M6 12h10"/></svg>',
+  };
+
+  function renderNav() {
+    const cur = parseHash().path;
+    const items = [['#/', 'Explore', 'explore'], ['#/artists', 'Artists', 'artists']];
+    if (me) {
+      items.push(['#/upload', 'Upload', 'upload'], ['#/dashboard', 'Dashboard', 'dash']);
+      if (isReviewer()) items.push(['#/review', 'Review', 'review']);
+    } else items.push(['#/login', 'Log in', 'login']);
+    const on = (h) => (h === '#/' ? cur === '/' : cur.startsWith(h.slice(1)));
+    document.getElementById('tabbar').innerHTML = items
+      .map(([h, l, i]) => `<a href="${h}" class="${on(h) ? 'on' : ''}">${ICON[i]}${l}</a>`).join('');
+    let right = items.map(([h, l]) => `<a href="${h}" class="${on(h) ? 'on' : ''}">${l}</a>`).join('');
+    right += me
+      ? `<a href="#/artist/${esc(me.username)}">My profile</a><button id="logout" type="button">Log out</button>`
+      : `<a class="btn primary" href="#/register" style="color:#fff;margin-left:6px">Join Folio</a>`;
+    document.getElementById('nav').innerHTML = right;
+    const lo = document.getElementById('logout');
+    if (lo) lo.onclick = async () => { await api('/api/logout', { method: 'POST' }); me = null; toast('You’re logged out.'); go('#/'); renderNav(); };
+  }
+
+  /* ---------- shared pieces ---------- */
+  function card(d, { showStatus = false } = {}) {
+    return `<a class="card" href="#/art/${d.id}">
+      <img loading="lazy" src="${esc(d.image)}" alt="${esc(d.title)} by ${esc(d.artist.name)}">
+      <div class="title">${esc(d.title)}</div>
+      <div class="meta"><span class="who">${avatar(d.artist)}<span>${esc(d.artist.name)}</span></span>
+      <span class="stats">${showStatus ? badge(d.status) : `♥ ${d.likes}${d.rating ? ` · ★ ${d.rating}` : ''}`}</span></div></a>`;
+  }
+
+  function empty(title, text, action = '') {
+    return `<div class="empty"><h3>${esc(title)}</h3><p>${esc(text)}</p>${action}</div>`;
+  }
+
+  async function gallery(container, params, opts = {}) {
+    let offset = 0;
+    container.innerHTML = '<div class="grid"></div><div class="row" style="justify-content:center;margin-top:8px"></div>';
+    const grid = container.firstElementChild, foot = container.lastElementChild;
+    const load = async () => {
+      const qs = new URLSearchParams({ ...params, offset, limit: 24 });
+      const { items, has_more } = await api('/api/drawings?' + qs);
+      if (offset === 0 && !items.length) { container.innerHTML = opts.empty || empty('Nothing here yet', 'No drawings match.'); return; }
+      grid.insertAdjacentHTML('beforeend', items.map((d) => card(d, opts)).join(''));
+      offset += items.length;
+      foot.innerHTML = has_more ? '<button class="btn" type="button">Show more</button>' : '';
+      if (has_more) foot.firstChild.onclick = () => load().catch((e) => toast(e.message));
+    };
+    await load();
+  }
+
+  /* ---------- pages ---------- */
+  async function explore({ params }) {
+    const q = params.q || '', tag = params.tag || '', sort = params.sort || 'new';
+    document.title = q ? `${q} – Artfolio` : 'Dhamodharan Artfolio – Drawing Community';
+    if (q || tag) {
+      app.innerHTML = `<div class="section-head"><h1>${tag ? '#' + esc(tag) : 'Results for “' + esc(q) + '”'}</h1></div>
+        <div id="artistHits"></div><div id="results"></div>`;
+      if (q) {
+        const { items } = await api('/api/artists?q=' + encodeURIComponent(q));
+        if (items.length) $('#artistHits').innerHTML = `<h2 style="margin-bottom:12px">Artists</h2><div class="artists">${items.slice(0, 6).map(artistCard).join('')}</div><h2 style="margin:24px 0 12px">Drawings</h2>`;
+      }
+      await gallery($('#results'), { q, tag, sort }, { empty: empty('No matches', 'Try a different word, or browse all drawings.', '<a class="btn" href="#/">Browse all</a>') });
+      return;
+    }
+    const { items: feat } = await api('/api/drawings?featured=1&limit=3');
+    app.innerHTML = `
+      ${me ? '' : `<section class="intro"><h1>Show your drawings to people who look closely.</h1>
+        <p>Upload your work, get it reviewed by curators, and collect feedback and ratings in one portfolio.</p>
+        <div class="row"><a class="btn primary" href="#/register">Create your portfolio</a><a class="btn" href="#/login">Log in</a></div></section>`}
+      ${feat.length ? `<div class="section-head"><h2>Featured</h2></div><div class="featured">${feat.map((d, i) =>
+        `<a class="f f${i}" href="#/art/${d.id}"><img src="${esc(d.image)}" alt="${esc(d.title)}"><div class="cap"><b>${esc(d.title)}</b><span>${esc(d.artist.name)}</span></div></a>`).join('')}</div>` : ''}
+      <div class="section-head"><h2>Approved drawings</h2>
+        <div class="chips" role="group" aria-label="Sort">${[['new', 'Newest'], ['top', 'Most liked'], ['rated', 'Top rated']]
+          .map(([k, l]) => `<a class="chip ${sort === k ? 'on' : ''}" href="#/?sort=${k}">${l}</a>`).join('')}</div></div>
+      <div id="results"></div>`;
+    await gallery($('#results'), { sort }, {
+      empty: empty('No approved drawings yet', 'Upload a drawing and a curator will review it.', me ? '<a class="btn primary" href="#/upload">Upload a drawing</a>' : '<a class="btn primary" href="#/register">Join Folio</a>'),
+    });
+  }
+
+  const artistCard = (a) => `<a class="artist" href="#/artist/${esc(a.username)}">${avatar(a, 'md')}
+    <div style="min-width:0"><b>${esc(a.name)}</b><div class="muted small">${esc(a.headline || '@' + a.username)}</div>
+    <div class="muted small">${a.works} drawing${a.works === 1 ? '' : 's'} · ♥ ${a.likes}</div></div></a>`;
+
+  async function artists({ params }) {
+    document.title = 'Artists – Folio';
+    app.innerHTML = `<div class="section-head"><h1>Artists</h1></div>
+      <form id="af" class="row" style="margin-bottom:16px"><input type="text" name="q" placeholder="Search by name, place or specialty" aria-label="Search artists" value="${esc(params.q || '')}" style="max-width:360px"><button class="btn">Search</button></form>
+      <div id="list"></div>`;
+    $('#af').onsubmit = (e) => { e.preventDefault(); go('#/artists?q=' + encodeURIComponent(new FormData(e.target).get('q'))); };
+    const { items } = await api('/api/artists?q=' + encodeURIComponent(params.q || ''));
+    $('#list').innerHTML = items.length ? `<div class="artists">${items.map(artistCard).join('')}</div>` : empty('No artists found', 'Artists appear here once a drawing is approved.');
+  }
+
+  async function profile({ m }) {
+    const { artist, stats } = await api('/api/artists/' + encodeURIComponent(m[1]));
+    document.title = `${artist.name} – Folio`;
+    const own = me && me.id === artist.id;
+    app.innerHTML = `<div class="panel profile">${avatar(artist, 'lg')}
+      <div style="flex:1;min-width:220px"><h1>${esc(artist.name)}</h1>
+        <div class="muted">${esc(artist.headline || '')}${artist.location ? (artist.headline ? ' · ' : '') + esc(artist.location) : ''}</div>
+        ${artist.bio ? `<p style="white-space:pre-wrap;max-width:60ch">${esc(artist.bio)}</p>` : ''}
+        <div class="row small muted"><span><b style="color:var(--ink)">${stats.works}</b> drawings</span><span><b style="color:var(--ink)">${stats.likes}</b> likes</span>${stats.rating ? `<span><b style="color:var(--ink)">★ ${stats.rating}</b> average</span>` : ''}</div></div>
+      ${own ? '<a class="btn" href="#/settings">Edit profile</a>' : ''}</div>
+      <div class="section-head"><h2>Portfolio</h2></div><div id="works"></div>`;
+    await gallery($('#works'), { artist: artist.username }, {
+      empty: empty('No approved drawings yet', own ? 'Upload a drawing. It shows here once a curator approves it.' : 'This artist hasn’t published any work yet.', own ? '<a class="btn primary" href="#/upload">Upload a drawing</a>' : ''),
+    });
+  }
+
+  function stars(current, enabled) {
+    return `<span class="stars" role="group" aria-label="Rate this drawing">${[1, 2, 3, 4, 5].map((n) =>
+      `<button type="button" data-star="${n}" class="${n <= current ? 'on' : ''}" ${enabled ? '' : 'disabled'} aria-label="${n} star${n > 1 ? 's' : ''}">★</button>`).join('')}</span>`;
+  }
+
+  async function artwork({ m }) {
+    const { drawing: d, comments } = await api('/api/drawings/' + m[1]);
+    document.title = `${d.title} – Artfolio`;
+    const own = me && me.id === d.artist.id;
+    const canRate = me && !own && d.status === 'approved';
+    const commentHtml = (c) => `<div class="comment" data-cid="${c.id}">${avatar(c.user, 'md')}<div style="flex:1;min-width:0">
+      <a href="#/artist/${esc(c.user.username)}"><b>${esc(c.user.name)}</b></a> <span class="muted small">${ago(c.created_at)}</span>
+      <p>${esc(c.body)}</p></div>${me && (me.id === c.user.id || own || me.role === 'admin') ? '<button class="btn small danger" data-del type="button">Remove</button>' : ''}</div>`;
+
+    app.innerHTML = `<div class="detail">
+      <div class="artwork"><img src="${esc(d.image)}" alt="${esc(d.title)} by ${esc(d.artist.name)}"></div>
+      <aside class="stack">
+        <div class="panel stack">
+          <div class="row between"><h1 style="font-size:1.7rem">${esc(d.title)}</h1><span>${badge(d.status)} ${d.featured ? '<span class="badge feat">Featured</span>' : ''}</span></div>
+          <a class="who" href="#/artist/${esc(d.artist.username)}">${avatar(d.artist, 'md')}<span><b>${esc(d.artist.name)}</b><br><span class="muted small">${esc(d.artist.headline || '@' + d.artist.username)}</span></span></a>
+          ${d.description ? `<p style="white-space:pre-wrap;margin:0">${esc(d.description)}</p>` : ''}
+          <div>${d.tags.map((t) => `<a class="tag" href="#/?tag=${encodeURIComponent(t)}">#${esc(t)}</a>`).join('')}</div>
+          ${d.review_note ? `<div class="note ${d.status}"><b>Curator note:</b> ${esc(d.review_note)}</div>` : ''}
+          ${d.status === 'pending' ? '<div class="note">This drawing is waiting for a curator. Only you and curators can see it until it’s approved.</div>' : ''}
+          <div class="actions">
+            <button class="btn ${d.liked ? 'on' : ''}" id="like" type="button">♥ <span id="likeN">${d.likes}</span></button>
+            <button class="btn" id="share" type="button">Share</button>
+            ${own ? '<button class="btn" id="edit" type="button">Edit</button>' : ''}
+            ${own || (me && me.role === 'admin') ? '<button class="btn danger" id="remove" type="button">Delete</button>' : ''}
+            ${me && me.role === 'admin' && d.status === 'approved' ? `<button class="btn" id="feature" type="button">${d.featured ? 'Remove from featured' : 'Feature'}</button>` : ''}
+          </div>
+          ${d.status === 'approved' ? `<div><div class="row"><b>Rating</b><span id="rateStars">${stars(d.my_rating, canRate)}</span></div>
+            <div class="muted small" id="rateInfo">${d.rating ? `${d.rating} average from ${d.rating_count} rating${d.rating_count === 1 ? '' : 's'}` : 'No ratings yet'}${!me ? ' · <a href="#/login">Log in to rate</a>' : own ? ' · You can’t rate your own drawing' : ''}</div></div>` : ''}
+          ${isReviewer() && d.status === 'pending' ? '<a class="btn primary" href="#/review">Go to review queue</a>' : ''}
+        </div>
+        <div class="panel" id="editBox" hidden></div>
+        <div class="panel"><h2 style="margin-bottom:6px">Feedback <span class="muted" style="font-weight:400">(<span id="cN">${comments.length}</span>)</span></h2>
+          <div id="comments">${comments.map(commentHtml).join('')}</div>
+          ${me ? `<form id="cf" style="margin-top:12px"><label for="cb">Leave feedback</label><textarea id="cb" maxlength="1000" placeholder="What works? What would you try next?"></textarea><button class="btn primary" style="margin-top:8px">Post feedback</button></form>`
+            : '<p class="muted"><a href="#/login">Log in</a> to leave feedback.</p>'}
+        </div>
+      </aside></div>`;
+
+    $('#share').onclick = async () => {
+      const url = location.href;
+      try { if (navigator.share) await navigator.share({ title: d.title, url }); else { await navigator.clipboard.writeText(url); toast('Link copied.'); } }
+      catch (e) { if (e.name !== 'AbortError') toast('Couldn’t share. Copy the address from your browser.'); }
+    };
+    $('#like').onclick = async () => {
+      if (!me) return go('#/login');
+      try { const r = await api(`/api/drawings/${d.id}/like`, { method: 'POST' }); $('#likeN').textContent = r.likes; $('#like').classList.toggle('on', r.liked); }
+      catch (e) { toast(e.message); }
+    };
+    const bindRate = () => $$('#rateStars [data-star]').forEach((b) => b.onclick = async () => {
+      try {
+        const r = await api(`/api/drawings/${d.id}/rate`, { method: 'POST', body: { stars: +b.dataset.star } });
+        $('#rateStars').innerHTML = stars(r.my_rating, true);
+        $('#rateInfo').textContent = `${r.rating} average from ${r.rating_count} rating${r.rating_count === 1 ? '' : 's'}`;
+        bindRate();
+        toast('Rating saved.');
+      } catch (e) { toast(e.message); }
+    });
+    bindRate();
+    const cf = $('#cf');
+    if (cf) cf.onsubmit = async (e) => {
+      e.preventDefault();
+      const body = $('#cb').value;
+      try {
+        const { comment } = await api(`/api/drawings/${d.id}/comments`, { method: 'POST', body: { body } });
+        $('#comments').insertAdjacentHTML('beforeend', commentHtml(comment));
+        $('#cb').value = ''; $('#cN').textContent = +$('#cN').textContent + 1; toast('Feedback posted.');
+      } catch (err) { toast(err.message); }
+    };
+    $('#comments').onclick = async (e) => {
+      const btn = e.target.closest('[data-del]'); if (!btn) return;
+      const row = btn.closest('.comment');
+      try { await api('/api/comments/' + row.dataset.cid, { method: 'DELETE' }); row.remove(); $('#cN').textContent = +$('#cN').textContent - 1; }
+      catch (err) { toast(err.message); }
+    };
+    const rm = $('#remove');
+    if (rm) rm.onclick = async () => {
+      if (!confirm('Delete this drawing? This can’t be undone.')) return;
+      try { await api('/api/drawings/' + d.id, { method: 'DELETE' }); toast('Deleted.'); go('#/dashboard'); } catch (e) { toast(e.message); }
+    };
+    const ft = $('#feature');
+    if (ft) ft.onclick = async () => {
+      try { await api(`/api/drawings/${d.id}/feature`, { method: 'POST', body: { featured: !d.featured } }); toast(d.featured ? 'Removed from featured.' : 'Featured.'); route(); } catch (e) { toast(e.message); }
+    };
+    const ed = $('#edit');
+    if (ed) ed.onclick = () => {
+      const box = $('#editBox'); box.hidden = !box.hidden;
+      box.innerHTML = `<h2 style="margin-bottom:12px">Edit drawing</h2><form id="ef">
+        <div class="field"><label for="et">Title</label><input type="text" id="et" maxlength="120" value="${esc(d.title)}" required></div>
+        <div class="field"><label for="ed">Description</label><textarea id="ed" maxlength="2000">${esc(d.description)}</textarea></div>
+        <div class="field"><label for="eg">Tags</label><input type="text" id="eg" value="${esc(d.tags.join(', '))}"><div class="hint">Separate with commas.</div></div>
+        <p class="muted small">Saving sends the drawing back to review.</p>
+        <button class="btn primary">Save and resubmit</button></form>`;
+      $('#ef').onsubmit = async (e) => {
+        e.preventDefault();
+        try { await api('/api/drawings/' + d.id, { method: 'PUT', body: { title: $('#et').value, description: $('#ed').value, tags: $('#eg').value } }); toast('Resubmitted for review.'); route(); }
+        catch (err) { toast(err.message); }
+      };
+    };
+  }
+
+  function uploadPage() {
+    if (!me) return go('#/login');
+    document.title = 'Upload – Folio';
+    app.innerHTML = `<div class="section-head"><h1>Upload a drawing</h1></div>
+      <form id="uf" class="form stack"><div id="err"></div>
+        <label class="dropzone" id="dz" for="file"><div id="preview"><b>Choose an image</b><div class="muted small">JPG, PNG, WebP or GIF · up to 8 MB</div></div></label>
+        <input type="file" id="file" name="image" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+        <div class="field"><label for="title">Title</label><input type="text" id="title" name="title" maxlength="120" required></div>
+        <div class="field"><label for="description">Description</label><textarea id="description" name="description" maxlength="2000" placeholder="Materials, process, what inspired it"></textarea></div>
+        <div class="field"><label for="tags">Tags</label><input type="text" id="tags" name="tags" placeholder="portrait, pencil, shading"><div class="hint">Separate with commas. Up to 8.</div></div>
+        <p class="muted small">A curator reviews every drawing before it appears in Explore and on your profile.</p>
+        <button class="btn primary" id="sub">Submit for review</button></form>`;
+    const file = $('#file'), dz = $('#dz');
+    const show = () => {
+      const f = file.files[0]; if (!f) return;
+      $('#preview').innerHTML = `<img src="${URL.createObjectURL(f)}" alt="Preview of your drawing"><div class="muted small" style="margin-top:8px">${esc(f.name)} · choose another to replace</div>`;
+      if (!$('#title').value) $('#title').value = f.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').slice(0, 120);
+    };
+    file.onchange = show;
+    ['dragenter', 'dragover'].forEach((ev) => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.add('over'); }));
+    ['dragleave', 'drop'].forEach((ev) => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.remove('over'); }));
+    dz.addEventListener('drop', (e) => { if (e.dataTransfer.files[0]) { file.files = e.dataTransfer.files; show(); } });
+    $('#uf').onsubmit = async (e) => {
+      e.preventDefault();
+      if (!file.files[0]) { $('#err').innerHTML = errorBox('Choose an image to upload.'); return; }
+      const btn = $('#sub'); btn.disabled = true; btn.textContent = 'Uploading…';
+      try { await api('/api/drawings', { method: 'POST', form: new FormData(e.target) }); toast('Submitted for review.'); go('#/dashboard'); }
+      catch (err) { $('#err').innerHTML = errorBox(err.message); btn.disabled = false; btn.textContent = 'Submit for review'; }
+    };
+  }
+
+  async function dashboard() {
+    if (!me) return go('#/login');
+    document.title = 'Dashboard – Folio';
+    const [dash, mine] = await Promise.all([api('/api/dashboard'), api('/api/drawings?mine=1&limit=60')]);
+    const t = (n, l) => `<div class="tile"><b>${n}</b><span class="muted small">${l}</span></div>`;
+    app.innerHTML = `<div class="section-head"><h1>Dashboard</h1><a class="btn primary" href="#/upload">Upload a drawing</a></div>
+      <div class="tiles">${t(dash.counts.total, 'Drawings')}${t(dash.counts.approved, 'Approved')}${t(dash.counts.pending, 'In review')}
+        ${t(dash.likes, 'Likes received')}${t(dash.comments, 'Comments received')}${t(dash.rating ? '★ ' + dash.rating : '–', dash.rating_count ? `Average of ${dash.rating_count}` : 'No ratings yet')}</div>
+      ${dash.pending_review !== null ? `<div class="panel row between" style="margin-top:16px"><span><b>${dash.pending_review}</b> drawing${dash.pending_review === 1 ? '' : 's'} waiting for review</span><a class="btn" href="#/review">Open review queue</a></div>` : ''}
+      <div class="section-head"><h2>Your drawings</h2></div>
+      <div class="panel">${mine.items.length ? mine.items.map((d) => `<div class="item"><a href="#/art/${d.id}"><img class="thumb" src="${esc(d.image)}" alt=""></a>
+        <div class="grow"><a href="#/art/${d.id}"><b>${esc(d.title)}</b></a><div class="muted small">${ago(d.created_at)} · ♥ ${d.likes} · ${d.comments} comment${d.comments === 1 ? '' : 's'}${d.rating ? ` · ★ ${d.rating}` : ''}</div>
+        ${d.review_note ? `<div class="note ${d.status}" style="margin-top:6px"><b>Curator note:</b> ${esc(d.review_note)}</div>` : ''}</div>${badge(d.status)}</div>`).join('')
+        : empty('You haven’t uploaded anything yet', 'Your first drawing goes to a curator for review.', '<a class="btn primary" href="#/upload">Upload a drawing</a>')}</div>
+      <div class="section-head"><h2>Recent feedback</h2></div>
+      <div class="panel">${dash.feedback.length ? dash.feedback.map((f) => `<div class="comment" style="border-top:0">${avatar(f, 'md')}<div><a href="#/artist/${esc(f.username)}"><b>${esc(f.name)}</b></a> on <a href="#/art/${f.drawing_id}">${esc(f.title)}</a> <span class="muted small">${ago(f.created_at)}</span><p>${esc(f.body)}</p></div></div>`).join('')
+        : '<p class="muted" style="margin:0">Feedback from other artists shows up here.</p>'}</div>`;
+  }
+
+  async function reviewPage() {
+    if (!isReviewer()) return go('#/');
+    document.title = 'Review – Folio';
+    const { items } = await api('/api/review');
+    app.innerHTML = `<div class="section-head"><h1>Review queue</h1><span class="muted">${items.length} waiting</span></div>
+      <div class="stack">${items.length ? items.map((d) => `<div class="panel review" data-id="${d.id}">
+        <a href="#/art/${d.id}"><img src="${esc(d.image)}" alt="${esc(d.title)}" style="border-radius:10px;width:100%;max-height:300px;object-fit:cover"></a>
+        <div class="stack"><div><h3><b>${esc(d.title)}</b></h3><div class="muted small">by <a href="#/artist/${esc(d.artist.username)}">${esc(d.artist.name)}</a> · ${ago(d.created_at)}</div></div>
+          ${d.description ? `<p style="margin:0;white-space:pre-wrap">${esc(d.description)}</p>` : ''}
+          <div><label for="n${d.id}">Note to the artist</label><textarea id="n${d.id}" maxlength="500" placeholder="Required when you request changes"></textarea></div>
+          <div class="row"><button class="btn primary" data-act="approved" type="button">Approve</button><button class="btn" data-act="rejected" type="button">Request changes</button></div></div></div>`).join('')
+        : empty('The queue is clear', 'New drawings show up here when artists submit them.')}</div>`;
+    app.onclick = async (e) => {
+      const b = e.target.closest('[data-act]'); if (!b) return;
+      const row = b.closest('[data-id]');
+      try {
+        await api('/api/review/' + row.dataset.id, { method: 'POST', body: { decision: b.dataset.act, note: $('textarea', row).value } });
+        row.remove(); toast(b.dataset.act === 'approved' ? 'Approved.' : 'Changes requested.');
+      } catch (err) { toast(err.message); }
+    };
+  }
+
+  function authPage(kind) {
+    return () => {
+      if (me) return go('#/');
+      const reg = kind === 'register';
+      document.title = (reg ? 'Join' : 'Log in') + ' – Folio';
+      app.innerHTML = `<div class="section-head"><h1>${reg ? 'Create your portfolio' : 'Log in'}</h1></div>
+        <form id="af" class="form panel"><div id="err"></div>
+          ${reg ? `<div class="field"><label for="name">Name</label><input type="text" id="name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="username">Username</label><input type="text" id="username" name="username" autocomplete="username" pattern="[a-zA-Z0-9_]{3,24}" required><div class="hint">3–24 letters, numbers or underscores.</div></div>` : ''}
+          <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email" required></div>
+          <div class="field"><label for="password">Password</label><input type="password" id="password" name="password" autocomplete="${reg ? 'new-password' : 'current-password'}" minlength="${reg ? 8 : 1}" required>${reg ? '<div class="hint">At least 8 characters.</div>' : ''}</div>
+          <button class="btn primary">${reg ? 'Create account' : 'Log in'}</button>
+          <p class="muted small">${reg ? 'Already have an account? <a href="#/login">Log in</a>' : 'New here? <a href="#/register">Create an account</a>'}</p></form>`;
+      $('#af').onsubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const data = Object.fromEntries(new FormData(e.target));
+          ({ user: me } = await api(reg ? '/api/register' : '/api/login', { method: 'POST', body: data }));
+          renderNav(); toast(reg ? `Welcome, ${me.name}.` : 'You’re logged in.'); go(reg ? '#/upload' : '#/');
+        } catch (err) { $('#err').innerHTML = errorBox(err.message); }
+      };
+    };
+  }
+
+  function settings() {
+    if (!me) return go('#/login');
+    document.title = 'Edit profile – Folio';
+    app.innerHTML = `<div class="section-head"><h1>Edit profile</h1></div>
+      <form id="pf" class="form panel"><div id="err"></div>
+        <div class="row field">${avatar(me, 'lg')}<div><label for="av">Profile photo</label><input type="file" id="av" name="avatar" accept="image/jpeg,image/png,image/webp"></div></div>
+        <div class="field"><label for="name">Name</label><input type="text" id="name" name="name" value="${esc(me.name)}" maxlength="60" required></div>
